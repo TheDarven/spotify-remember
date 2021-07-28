@@ -1,0 +1,19 @@
+{
+  "name": "spotify-remember",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/TheDarven/spotify-remember.git"
+  },
+  "author": "TheDarven",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/TheDarven/spotify-remember/issues"
+  },
+  "homepage": "https://gitlab.com/TheDarven/spotify-remember#readme"
+}
