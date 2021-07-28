@@ -119,3 +119,6 @@ dist
 
 # IDE
 .idea
+
+# config files
+.env

@@ -2,9 +2,9 @@
   "name": "spotify-remember",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://gitlab.com/TheDarven/spotify-remember/issues"
   },
-  "homepage": "https://gitlab.com/TheDarven/spotify-remember#readme"
+  "homepage": "https://gitlab.com/TheDarven/spotify-remember#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "spotify-web-api-node": "^5.0.2",
+    "toad-scheduler": "^1.5.0"
+  }
 }
