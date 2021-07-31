@@ -1,24 +1,28 @@
-const http = require('http')
+const express = require('express')
 const dotenv = require('dotenv')
-const { createJob } = require ('./app/tasks/history-viewer')
+const endpoint = require('./app/endpoint/endpoint-manager')
+const { setUrl, getUrl } = require('./app/main-manager')
+const { createJob } = require('./app/tasks/history-viewer')
+const { authenticate } = require('./app/database/database-manager')
 
 dotenv.config()
-
+const app = express()
 const hostname = '127.0.0.1';
 const port = 3000;
+app.listen(port)
 
-const server = http.createServer((req, res) => {
+setUrl(`http://${hostname}:${port}/`);
+
+app.get('', (req, res) => {
     res.statusCode = 200;
-    console.log(req);
     res.setHeader('Content-Type', 'text/plain');
     res.end('Hello World');
 });
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.use('/', endpoint)
 
 createJob()
 
-const { initSpotifyApi, getSpotifyApi } = require('./app/spotify/spotify-manager')
-initSpotifyApi();
+authenticate()
+
+console.log(`Server running at ${getUrl()}`);
