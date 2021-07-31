@@ -3,9 +3,9 @@ const dotenv = require('dotenv')
 const endpoint = require('./app/endpoint/endpoint-manager')
 const { setUrl, getUrl } = require('./app/main-manager')
 const { createJob } = require('./app/tasks/history-viewer')
+dotenv.config()
 const { authenticate } = require('./app/database/database-manager')
 
-dotenv.config()
 const app = express()
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -22,6 +22,7 @@ app.get('', (req, res) => {
 app.use('/', endpoint)
 
 createJob()
+
 
 authenticate()
 
