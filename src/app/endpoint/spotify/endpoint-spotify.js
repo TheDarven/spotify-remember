@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const { getUrl } = require('../../main-manager')
 const { initSpotifyApi } = require('../../spotify/spotify-manager')
-const { FunctionalException, buildExceptionResponse } = require('../../exception/custom-exceptions')
-const { createUser } = require('../../users/user-manager')
+const { FunctionalException, buildExceptionResponse, buildIfNotFunctionException } = require('../../exception/custom-exceptions')
+const { addUser } = require('../../users/user-manager')
 const { getTimestamp } = require('../../utils/utils')
 
 router.get('/login', (req, res) => {
@@ -36,22 +36,20 @@ router.get('/callback', async (req, res) => {
 async function initUser(code) {
     const spotifyApi = initSpotifyApi();
 
+    let authorizationResponse;
+    let currentUser;
+
     try {
-        const data = await spotifyApi.authorizationCodeGrant(code);
-        spotifyApi.setAccessToken(data.body['access_token']);
-        spotifyApi.setRefreshToken(data.body['refresh_token']);
+        authorizationResponse = await spotifyApi.authorizationCodeGrant(code);
+        spotifyApi.setAccessToken(authorizationResponse.body['access_token']);
+        spotifyApi.setRefreshToken(authorizationResponse.body['refresh_token']);
 
-        const currentUser = await spotifyApi.getMe();
-
-        const user = createUser(currentUser.body.id, spotifyApi, getTimestamp() + data.body['expires_in']);
-
-        const lastTracks = await spotifyApi.getMyRecentlyPlayedTracks({ limit : 20 });
-        // console.log(lastTracks.body.items.forEach(item => console.log(item.track)));
-
-        return user;
+        currentUser = await spotifyApi.getMe();
     } catch (err) {
-        throw new FunctionalException(err.body.error_description, parseInt(err.statusCode))
+        throw buildIfNotFunctionException(err.body.error_description, parseInt(err.statusCode), err)
     }
+
+    return await addUser(currentUser.body.id, spotifyApi, getTimestamp() + authorizationResponse.body['expires_in']);
 }
 
 module.exports = router

@@ -13,4 +13,17 @@ function buildExceptionResponse(res, err, defaultMessage) {
     return res.status(code).json({ code, message });
 }
 
-module.exports = { FunctionalException, buildExceptionResponse };
+/**
+ * Retourne <b>err</b> si c'est une <b>FunctionalException</b>,
+ * construit une <b>FunctionalException</b> avec les paramètres sinon.
+ *
+ * @param message
+ * @param code
+ * @param err
+ * @returns {FunctionalException|FunctionalException}
+ */
+function buildIfNotFunctionException(message, code, err) {
+    return err instanceof FunctionalException ? err : new FunctionalException(message, code)
+}
+
+module.exports = { FunctionalException, buildExceptionResponse, buildIfNotFunctionException };

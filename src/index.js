@@ -23,7 +23,6 @@ app.use('/', endpoint)
 
 createJob()
 
-
 authenticate()
 
 console.log(`Server running at ${getUrl()}`);
