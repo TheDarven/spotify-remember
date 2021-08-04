@@ -25,5 +25,8 @@
     "sequelize": "^6.6.5",
     "spotify-web-api-node": "^5.0.2",
     "toad-scheduler": "^1.5.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
   }
 }
