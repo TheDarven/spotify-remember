@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: true
         },
         refresh_token: {
-            type: DataTypes.STRING(200)
+            type: DataTypes.STRING(400)
         }
     }, {
         sequelize,

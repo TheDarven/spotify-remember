@@ -11,7 +11,11 @@ module.exports = {
     dialect: 'postgres',
     dialectOptions: {
       bigNumberStrings: true
-    }
+    },
+    define: {
+      timestamps: false
+    },
+    logging: false
   },
   test: {
     username: process.env.DATABASE_USER,
@@ -22,7 +26,11 @@ module.exports = {
     dialect: 'postgres',
     dialectOptions: {
       bigNumberStrings: true
-    }
+    },
+    define: {
+      timestamps: false
+    },
+    loggin: false
   },
   production: {
     username: process.env.DATABASE_USER,
@@ -33,6 +41,10 @@ module.exports = {
     dialect: 'postgres',
     dialectOptions: {
       bigNumberStrings: true
-    }
+    },
+    define: {
+      timestamps: false
+    },
+    logging: false
   }
 };

@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Context.init({
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         last_fetch: {
           type: DataTypes.DATE,
           allowNull: false,

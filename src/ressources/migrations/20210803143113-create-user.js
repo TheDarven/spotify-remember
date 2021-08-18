@@ -12,7 +12,7 @@ module.exports = {
                 defaultValue: true
             },
             refresh_token: {
-                type: Sequelize.STRING(200)
+                type: Sequelize.STRING(400)
             }
         });
     },

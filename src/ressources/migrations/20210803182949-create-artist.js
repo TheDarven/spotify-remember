@@ -10,6 +10,10 @@ module.exports = {
             name: {
                 type: Sequelize.STRING(200),
                 allowNull: false
+            },
+            uri: {
+                type: Sequelize.STRING(250),
+                allowNull: false
             }
         });
     },
