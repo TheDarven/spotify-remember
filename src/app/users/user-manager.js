@@ -1,4 +1,7 @@
-const { isUserExist, createUser, updateUser } = require('../database/helpers/user-helper')
+const { createOrUpdateUser } = require('../database/helpers/user-helper')
+const { getAllUsers } = require('../database/helpers/user-helper');
+const { initSpotifyApi } = require('../spotify/spotify-manager');
+const { getTimestamp } = require('../utils/utils');
 
 // Les utilisateurs du context
 let users = []
@@ -14,12 +17,7 @@ let users = []
 async function addUser(id, spotifyApi, whenTokenExpires) {
     removeUser(id)
 
-    const userExit = await isUserExist(id);
-    if (!userExit) {
-        await createUser({ id, refresh_token: spotifyApi.getRefreshToken() })
-    } else {
-        await updateUser(id, { refresh_token: spotifyApi.getRefreshToken() })
-    }
+    await createOrUpdateUser(id, { refresh_token: spotifyApi.getRefreshToken() })
 
     const user = {
         id, spotifyApi, whenTokenExpires
@@ -37,12 +35,27 @@ function removeUser(id) {
     users = users.filter(user => user.id !== id)
 }
 
-function loadUsers() {
+async function loadUsers() {
+    const users = await getAllUsers();
+    for (const user of users) {
+        const spotifyApi = initSpotifyApi();
+        spotifyApi.setRefreshToken(user.refresh_token);
 
+        const refreshAccessToken = await spotifyApi.refreshAccessToken();
+        spotifyApi.setAccessToken(refreshAccessToken.body['access_token']);
+        await addUser(user.id, spotifyApi, getTimestamp() + refreshAccessToken.body['expires_in']);
+    }
+}
+
+async function refreshTokenOfUser(user) {
+    const { spotifyApi } = user;
+    const refreshAccessToken = await spotifyApi.refreshAccessToken();
+    spotifyApi.setAccessToken(refreshAccessToken.body['access_token']);
+    user.whenTokenExpires = getTimestamp() + refreshAccessToken.body['expires_in'];
 }
 
 function getUsers() {
     return users;
 }
 
-module.exports = { addUser, removeUser, loadUsers, getUsers }
+module.exports = { addUser, removeUser, loadUsers, refreshTokenOfUser, getUsers }
