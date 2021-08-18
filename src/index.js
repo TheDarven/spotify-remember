@@ -26,3 +26,13 @@ createJob()
 authenticate()
 
 console.log(`Server running at ${getUrl()}`);
+
+const { createContextIfNotExist } = require('./app/database/helpers/context-helper');
+const { loadUsers } = require('./app/users/user-manager');
+
+onEnable();
+
+async function onEnable() {
+    await createContextIfNotExist();
+    await loadUsers();
+}
