@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Context', {
+        await queryInterface.createTable('Contexts', {
             last_fetch: {
                 type: Sequelize.DATE,
                 allowNull: false,
@@ -10,6 +10,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Context');
+        await queryInterface.dropTable('Contexts');
     }
 };
