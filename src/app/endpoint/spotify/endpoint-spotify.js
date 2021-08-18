@@ -7,8 +7,6 @@ const { addUser } = require('../../users/user-manager')
 const { getTimestamp } = require('../../utils/utils')
 
 router.get('/login', (req, res) => {
-    // TODO Mettre state
-
     const scopes = 'user-read-recently-played playlist-modify-public playlist-modify-private ' +
         'user-read-currently-playing playlist-read-private user-read-private user-read-email user-library-read';
     res.redirect('https://accounts.spotify.com/authorize' +
@@ -26,7 +24,6 @@ router.get('/callback', async (req, res) => {
         }
 
         const user = await initUser(code)
-
         return res.json({ message: `Utilisateur ajouté avec succès : ${user.id}` })
     } catch (err) {
         return buildExceptionResponse(res, err, 'Erreur lors de l\'appel à la page')
