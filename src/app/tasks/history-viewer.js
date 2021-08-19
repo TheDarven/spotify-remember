@@ -98,7 +98,9 @@ async function createOrUpdatePlaylistDates(playlistDates, user) {
         if (await isPlaylistExisting(playlistDate.month, playlistDate.year, user.id)) {
             playlist = await getPlaylistByMonthYearAndUserId(playlistDate.month, playlistDate.year, user.id);
         } else {
-            const playlistName = `Découvertes ${playlistDate.month}/${playlistDate.year}`;
+            const formattedMonth = ("0" + playlistDate.month).slice(-2);
+
+            const playlistName = `Découvertes ${formattedMonth}/${playlistDate.year}`;
             let spotifyPlaylist = await user.spotifyApi.createPlaylist(playlistName);
             spotifyPlaylist = spotifyPlaylist.body;
 
