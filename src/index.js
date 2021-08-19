@@ -7,8 +7,8 @@ dotenv.config()
 const { authenticate } = require('./app/database/database-manager')
 
 const app = express()
-const hostname = '127.0.0.1';
-const port = 3000;
+const hostname = process.env.HOST;
+const port = process.env.PORT;
 app.listen(port)
 
 setUrl(`http://${hostname}:${port}/`);
