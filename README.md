@@ -27,11 +27,10 @@ Permet de créer chaque mois sur Spotify une playlist "Musiques découvertes le 
 ### En mode develop :
 
 6. Exécuter `npx sequelize-cli db:migrate` puis `npm run dev` pour lancer la migration de données puis l'application
+7. Accéder au site lancée avec cet url `host:port/spotify/login` puis accepter
 
 ### En mode production :
 
 6. Exécuter `npm run start` pour lancer la migration de données puis l'application
-
-
 
 7. Accéder au site lancée avec cet url `host:port/spotify/login` puis accepter
