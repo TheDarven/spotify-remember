@@ -67,7 +67,7 @@ function getPlaylistDatesOfTracks(newUserTracks) {
     const playlistDates = [];
     for (const userTrack of newUserTracks) {
         const firstPlay = new Date(userTrack.first_play);
-        const month = firstPlay.getMonth();
+        const month = firstPlay.getMonth() + 1;
         const year = firstPlay.getFullYear();
 
         const playlistDatesMatches = playlistDates.filter(p => p.month === month && p.year === year);
