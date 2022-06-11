@@ -18,7 +18,7 @@ router.get('/login', (req, res) => {
 
 router.get('/callback', async (req, res) => {
     try {
-        const { code, state } = req.query
+        const { code } = req.query
         if (!code) {
             throw new FunctionalException('Aucun code n\'est présent en paramètre', 500)
         }
