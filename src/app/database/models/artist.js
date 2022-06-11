@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
                 otherKey: 'id_track'
             });
         }
-    };
+    }
     Artist.init({
         id: {
             type: DataTypes.STRING(22),

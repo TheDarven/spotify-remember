@@ -1,0 +1,56 @@
+stages:
+  - staging
+  - lint
+  - build
+  - deploy
+
+variables:
+  APP_DIR: $APP_DIR
+
+staging:
+  tags:
+    - docker
+  image: node:14-alpine
+  stage: staging
+  script:
+    - npm ci --silent
+  artifacts:
+    paths:
+      - node_modules
+  only:
+    - develop
+    - merge_requests
+
+lint:
+  tags:
+    - docker
+  image: node:14-alpine
+  stage: lint
+  artifacts:
+    paths:
+      - node_modules
+  only:
+    - develop
+    - merge_requests
+  script:
+    - npm run lint
+
+build:
+  tags:
+    - shell
+  stage: build
+  script:
+    - docker build . -t thedarven/spotify-remember
+  only:
+    - main
+
+deploy:
+  tags:
+    - shell
+  stage: deploy
+  script:
+    - cd $APP_DIR
+    - docker-compose down
+    - docker-compose up -d
+  only:
+    - main
