@@ -1,38 +1,37 @@
 const express = require('express')
-const dotenv = require('dotenv')
-const endpoint = require('./app/endpoint/endpoint-manager')
-const { setUrl, getUrl } = require('./app/main-manager')
-const { createJob } = require('./app/tasks/history-viewer')
-dotenv.config()
+require('./app/utils/env-loader')
+const controllerManager = require('./app/controller/controller-manager')
+const { setUrl, getUrl } = require('./app/utils/url')
 const { authenticate } = require('./app/database/database-manager')
 
+// Start server
 const app = express()
 const hostname = process.env.HOST;
 const port = process.env.PORT;
+
 app.listen(port)
 
 setUrl(`http://${hostname}:${port}/`);
 
-app.get('', (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World');
-});
+// Init endpoints
+app.use('/', controllerManager)
 
-app.use('/', endpoint)
-
-createJob()
-
+// Connect to database
 authenticate()
+    .then(async () => {
+        console.log(`\x1b[32m✔ \x1b[0mServer running at ${getUrl()}`);
 
-console.log(`Server running at ${getUrl()}`);
+        const { createJob } = require('./app/tasks/history-viewer')
+        createJob()
 
-const { createContextIfNotExist } = require('./app/database/helpers/context-helper');
-const { loadUsers } = require('./app/users/user-manager');
+        // Init server context
+        const { createContextIfNotExist } = require("./app/service/context-service");
+        const { loadUsers } = require("./app/users/user-manager");
 
-onEnable();
-
-async function onEnable() {
-    await createContextIfNotExist();
-    await loadUsers();
-}
+        try {
+            await createContextIfNotExist();
+            await loadUsers();
+        } catch (err) {
+            console.log(err);
+        }
+    })

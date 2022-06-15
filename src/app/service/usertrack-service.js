@@ -1,5 +1,5 @@
-const { FunctionalException } = require('../../exception/custom-exceptions')
-const { UserTrack } = require('../models/index')
+const { FunctionalException } = require('../exception/custom-exceptions')
+const { UserTrack } = require('../model')
 
 const ERROR_GET_USER_TRACK = 'Erreur lors de la récupération d\'une musique d\'un utilisateur.';
 const ERROR_CREATE_USER_TRACK = 'Erreur lors de la création de la musique d\'un utilisateur.';

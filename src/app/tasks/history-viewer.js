@@ -1,11 +1,11 @@
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler')
 const { isSameMonth } = require('../utils/utils')
 const { refreshTokenOfUser, getUsers } = require('../users/user-manager')
-const { isTrackExisting, getTrackById, createTrack } = require('../database/helpers/track-helper')
-const { isArtistExisting, getArtistById, createArtist } = require('../database/helpers/artist-helper')
-const { isUserTrackExisting, getUserTrackByIds, updateUserTrack, createUserTrack } = require('../database/helpers/usertrack-helper')
-const { getContext, updateLastFetch } = require('../database/helpers/context-helper')
-const { isPlaylistExisting, getPlaylistByMonthYearAndUserId, createPlaylist } = require('../database/helpers/playlist-helper')
+const { isTrackExisting, getTrackById, createTrack } = require('../service/track-service')
+const { isArtistExisting, getArtistById, createArtist } = require('../service/artist-service')
+const { isUserTrackExisting, getUserTrackByIds, updateUserTrack, createUserTrack } = require('../service/usertrack-service')
+const { getContext, updateLastFetch } = require('../service/context-service')
+const { isPlaylistExisting, getPlaylistByMonthYearAndUserId, createPlaylist } = require('../service/playlist-service')
 
 const scheduler = new ToadScheduler()
 const jobs = [];

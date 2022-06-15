@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { getUrl } = require('../../main-manager')
-const { initSpotifyApi } = require('../../spotify/spotify-manager')
-const { FunctionalException, buildExceptionResponse, buildIfNotFunctionException } = require('../../exception/custom-exceptions')
-const { addUser } = require('../../users/user-manager')
-const { getTimestamp } = require('../../utils/utils')
+const { getUrl } = require('../utils/url')
+const { initSpotifyApi } = require('../spotify/spotify-manager')
+const { FunctionalException, buildExceptionResponse, buildIfNotFunctionException } = require('../exception/custom-exceptions')
+const { addUser } = require('../users/user-manager')
+const { getTimestamp } = require('../utils/utils')
 
 router.get('/login', (req, res) => {
     const scopes = 'user-read-recently-played playlist-modify-public playlist-modify-private ' +
