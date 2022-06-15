@@ -1,5 +1,5 @@
-const { FunctionalException } = require('../../exception/custom-exceptions')
-const { Playlist } = require('../models/index')
+const { FunctionalException } = require('../exception/custom-exceptions')
+const { Playlist } = require('../model')
 
 const ERROR_GET_PLAYLIST = 'Erreur lors de la récupération de la playlist.';
 const ERROR_CREATE_PLAYLIST = 'Erreur lors de la création de la playlist.';

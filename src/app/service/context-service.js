@@ -1,5 +1,5 @@
-const { FunctionalException } = require('../../exception/custom-exceptions')
-const { Context } = require('../models/index')
+const { FunctionalException } = require('../exception/custom-exceptions')
+const { Context } = require('../model')
 
 const ERROR_GET_CONTEXT = 'Erreur lors de la récupération du context.';
 const ERROR_CREATE_CONTEXT = 'Erreur lors de la création du context.';

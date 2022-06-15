@@ -1,5 +1,5 @@
 const SpotifyWebApi = require('spotify-web-api-node');
-const { getUrl } = require('../main-manager')
+const { getUrl } = require('../utils/url')
 
 function initSpotifyApi() {
     return new SpotifyWebApi({

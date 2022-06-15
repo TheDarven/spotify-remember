@@ -1,5 +1,5 @@
-const { FunctionalException } = require('../../exception/custom-exceptions')
-const { User } = require('../models/index')
+const { FunctionalException } = require('../exception/custom-exceptions')
+const { User } = require('../model')
 
 const ERROR_GET_USER = 'Erreur lors de la récupération de l\'utilisateur.';
 const ERROR_GET_USERS = 'Erreur lors de la récupération de tout les utilisateurs.';

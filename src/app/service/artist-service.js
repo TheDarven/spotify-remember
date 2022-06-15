@@ -1,5 +1,5 @@
-const { FunctionalException } = require('../../exception/custom-exceptions')
-const { Artist } = require('../models/index')
+const { FunctionalException } = require('../exception/custom-exceptions')
+const { Artist } = require('../model')
 
 const ERROR_GET_ARTIST = 'Erreur lors de la récupération de l\'artiste.';
 const ERROR_CREATE_ARTIST = 'Erreur lors de la création de l\'artiste.';

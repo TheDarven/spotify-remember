@@ -1,26 +1,16 @@
 const { Sequelize } = require('sequelize')
+const { env } = require('../utils/env-loader')
+const config = require('../../ressources/config/sequelize')[env];
 
-const sequelize = new Sequelize(process.env.DATABASE_DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
-    host: process.env.DATABASE_HOST,
-    dialect: 'postgres',
-    port: process.env.DATABASE_PORT,
-    define: {
-        timestamps: false
-    },
-    logging: false
-});
+const sequelize = new Sequelize(process.env.DATABASE_DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, config);
 
 async function authenticate() {
     try {
         await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+        console.log('\x1b[32m✔ \x1b[0mConnection has been established successfully.');
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        console.error('\x1b[31m❌ \x1b[0mUnable to connect to the database:', error);
     }
 }
 
-function getConnection() {
-    return sequelize;
-}
-
-module.exports = { authenticate, getConnection }
+module.exports = { authenticate, sequelize }

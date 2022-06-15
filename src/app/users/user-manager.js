@@ -1,5 +1,5 @@
-const { createOrUpdateUser } = require('../database/helpers/user-helper')
-const { getAllUsers } = require('../database/helpers/user-helper');
+const { createOrUpdateUser } = require('../service/user-service')
+const { getAllUsers } = require('../service/user-service');
 const { initSpotifyApi } = require('../spotify/spotify-manager');
 const { getTimestamp } = require('../utils/utils');
 
