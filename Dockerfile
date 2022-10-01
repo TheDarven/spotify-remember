@@ -6,12 +6,14 @@ WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
 # Install dependencies
-COPY package*.json ./
-
-RUN npm ci
+COPY package*.json .
+COPY tsconfig.json .
+COPY prisma ./prisma
 
 # Copy source code into image
-COPY . .
+COPY src ./src
+
+RUN npm ci
 
 EXPOSE 8000
 CMD ["npm", "run", "start"]
