@@ -53,7 +53,8 @@ export async function lastPlayedTrackTask(): Promise<void> {
 
             const lastTracks: SpotifyResponse<SpotifyApi.UsersRecentlyPlayedTracksResponse> =
                 await user.spotifyApi.getMyRecentlyPlayedTracks({
-                    after: new Date(context.lastFetch).getTime()
+                    after: new Date(context.lastFetch).getTime(),
+                    limit: 50
                 })
 
             const lastTracksBody: SpotifyApi.UsersRecentlyPlayedTracksResponse = lastTracks.body

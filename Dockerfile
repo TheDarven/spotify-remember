@@ -6,8 +6,10 @@ WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
 # Install dependencies
-COPY package*.json .
-COPY tsconfig.json .
+COPY package*.json ./
+COPY tsconfig.json ./
+
+#Copy migration files
 COPY prisma ./prisma
 
 # Copy source code into image
