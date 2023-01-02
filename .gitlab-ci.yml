@@ -6,6 +6,7 @@ stages:
 
 variables:
   APP_DIR: $APP_DIR
+  VERSION_REGEX: '/^[0-9].[0-9].[0-9]$/'
 
 staging:
   tags:
@@ -39,18 +40,26 @@ build:
   tags:
     - shell
   stage: build
+  rules:
+    - if: $CI_COMMIT_TAG && $CI_COMMIT_TAG =~ $VERSION_REGEX
+      when: on_success
+    - when: never
+  before_script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
   script:
-    - docker build . -t thedarven/spotify-remember
-  only:
-    - main
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
 
 deploy:
   tags:
     - shell
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG && $CI_COMMIT_TAG =~ $VERSION_REGEX
+      when: on_success
+    - when: never
   script:
     - cd $APP_DIR
     - docker-compose down
     - docker-compose up -d
-  only:
-    - main

@@ -1,4 +1,4 @@
-FROM node:14-alpine as base
+FROM node:16-alpine as base
 
 WORKDIR /usr/src/app
 
@@ -7,11 +7,15 @@ ENV NODE_ENV=production
 
 # Install dependencies
 COPY package*.json ./
+COPY tsconfig.json ./
 
-RUN npm ci
+#Copy migration files
+COPY prisma ./prisma
 
 # Copy source code into image
-COPY . .
+COPY src ./src
+
+RUN npm ci
 
 EXPOSE 8000
 CMD ["npm", "run", "start"]

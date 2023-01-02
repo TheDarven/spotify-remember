@@ -1,0 +1,81 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id String @id @db.VarChar(22)
+    enable Boolean @default(true)
+    refreshToken String? @db.VarChar(400) @map("refresh_token")
+    playlists Playlist[]
+    tracks UserTrack[]
+}
+
+model Artist {
+    id String @id @db.VarChar(22)
+    name String @db.VarChar(200)
+    uri String @db.VarChar(250)
+    tracks TrackArtist[]
+}
+
+model Track {
+    id String @id @db.VarChar(22)
+    name String @db.VarChar(200)
+    uri String @db.VarChar(250)
+    playlists PlaylistTrack[]
+    authors TrackArtist[]
+    listeners UserTrack[]
+}
+
+model Playlist {
+    id String @id @db.VarChar(22)
+    user User @relation(fields: [idUser], references: [id])
+    idUser String @db.VarChar(22) @map("id_user")
+    name String @db.VarChar(200)
+    month Int @db.Integer
+    year Int @db.Integer
+    tracks PlaylistTrack[]
+
+    @@unique([month, year, idUser])
+}
+
+model PlaylistTrack {
+    playlist Playlist @relation(fields: [idPlaylist], references: [id])
+    idPlaylist String @db.VarChar(22) @map("id_playlist")
+    track Track @relation(fields: [idTrack], references: [id])
+    idTrack String @db.VarChar(22) @map("id_track")
+
+    @@id([idPlaylist, idTrack])
+}
+
+model TrackArtist {
+    artist Artist @relation(fields: [idArtist], references: [id])
+    idArtist String @db.VarChar(22) @map("id_artist")
+    track Track @relation(fields: [idTrack], references: [id])
+    idTrack String @db.VarChar(22) @map("id_track")
+
+    @@id([idArtist, idTrack])
+}
+
+model UserTrack {
+    user User @relation(fields: [idUser], references: [id])
+    idUser String @db.VarChar(22) @map("id_user")
+    track Track @relation(fields: [idTrack], references: [id])
+    idTrack String @db.VarChar(22) @map("id_track")
+    firstPlay DateTime @map("first_play")
+    lastPlay DateTime @map("last_play")
+    isOnPlaylist Boolean @default(true) @map("is_on_playlist")
+    nbListeningTotal Int @db.Integer @default(1) @map("nb_listening_total")
+    nbListeningFirstMonth Int @db.Integer @default(1) @map("nb_listening_first_month")
+
+    @@id([idUser, idTrack])
+}
+
+model Context {
+    id Int @id @default(autoincrement())
+    lastFetch DateTime @default(now()) @db.Timestamptz @map("last_fetch")
+}

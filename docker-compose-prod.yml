@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  app:
+    container_name: spotify-remember
+    image: thedarven/spotify-remember
+    ports:
+      - 8000:8000
+    build:
+      context: .
+    environment:
+      - PORT=
+      - HOST=
+      - ALLOWED_USERS_IDS=
+      - SPOTIFY_CLIENT_ID=
+      - SPOTIFY_CLIENT_SECRET=
+      - TASK_DELAY=
+      - DATABASE_URL=

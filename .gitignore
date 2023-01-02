@@ -47,6 +47,7 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
+out/
 
 # Optional npm cache directory
 .npm
@@ -122,3 +123,6 @@ dist
 
 # config files
 .env
+
+# Docker-compose
+docker-compose.yml
